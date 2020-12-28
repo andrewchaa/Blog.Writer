@@ -25,7 +25,8 @@ namespace Blog.Writer.Cli
                     {
                         Console.WriteLine("Usage: \n");
                         Console.WriteLine("dotnet run");
-                        Console.WriteLine($"  --cmd {Write}     to generate jekyll posts from your chosen github repository");
+                        Console.WriteLine($"  --cmd {Write} --dir ../../_posts " + "" +
+                                          "    to generate jekyll posts from your chosen github repository");
                         return;
                     }
 
@@ -33,7 +34,8 @@ namespace Blog.Writer.Cli
                     {
                         Console.WriteLine("Pulling github posts ...");
                         await _mediator.Send(new WritePostsCommand(RepositoryOptions.Owner,
-                            RepositoryOptions.Name));
+                            RepositoryOptions.Name, 
+                            x.Directory));
                     }
                 });
         }

@@ -6,12 +6,15 @@ namespace Blog.Writer.Contracts.Commands
     {
         public string Owner { get; }
         public string Name { get; }
+        public string Directory { get; }
 
         public WritePostsCommand(string owner, 
-            string name)
+            string name, 
+            string directory)
         {
             Owner = owner;
             Name = name;
+            Directory = directory;
         }
     }
 }

@@ -28,18 +28,23 @@ namespace Blog.Writer.Services.Handlers
             {
                 Directory.Delete("posts", true);
             }
-            Directory.CreateDirectory("posts");
+            var postDirectory = Directory.CreateDirectory("posts");
             
             foreach (var post in posts)
             {
+                Console.WriteLine($"Writing {post.Name} ...");
                 var title = post.Contents.Split(Environment.NewLine)
                     .First()
                     .TrimStart('#',' ')
                     .TrimStart('.');
-                Console.WriteLine(title);
                 
                 await File.WriteAllTextAsync(post.Path, 
                     $"{post.FrontMatter}\n{post.Contents}");
+            }
+
+            foreach (var file in postDirectory.GetFiles())
+            {
+                file.CopyTo(Path.Combine(command.Directory, file.Name), true);
             }
             
             return new Unit();
