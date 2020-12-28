@@ -26,8 +26,9 @@ namespace Blog.Writer.Tests
 [https://stackoverflow.com/questions/958949/difference-between-select-and-selectmany](https://stackoverflow.com/questions/958949/difference-between-select-and-selectmany)
 ";                
             // act
-            var post = new GithubPost("name", 
+            var post = new BlogPost("name", 
                 DateTime.Today,
+                string.Empty,
                 input);
             
             Assert.That(post.Contents, Is.EqualTo(contents));

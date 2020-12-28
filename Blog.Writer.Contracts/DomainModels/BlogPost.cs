@@ -5,10 +5,11 @@ using FunctionalWay.Extensions;
 
 namespace Blog.Writer.Contracts.DomainModels
 {
-    public class GithubPost
+    public class BlogPost
     {
         public string Name { get; }
         public DateTime Date { get; }
+        public string Group { get; }
         public string Contents { get; }
 
         public string Path => $"posts/{Date:yyyy-MM-dd}-{Name.TrimStart('.')}";
@@ -20,14 +21,20 @@ title: {Title}
 date: {Date:s}
 categories:
   - technical
+tags:
+  {Group}
 ---
 ";
-        public GithubPost(string name,
+        public BlogPost(string name,
             DateTime date,
+            string group,
             string contents)
         {
             Name = name;
             Date = date;
+            Group = string.IsNullOrEmpty(group)
+                ? string.Empty
+                : $"- {group}";
             Title = contents.Split(Environment.NewLine)
                 .First()
                 .TrimStart('#',' ')

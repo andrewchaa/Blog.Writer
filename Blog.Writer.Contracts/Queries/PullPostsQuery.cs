@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Blog.Writer.Contracts.Queries
 {
-    public class PullPostsQuery : IRequest<IEnumerable<GithubPost>>
+    public class PullPostsQuery : IRequest<IEnumerable<BlogPost>>
     {
         public string Owner { get; }
         public string Name { get; }
