@@ -29,7 +29,8 @@ namespace Blog.Writer.Services.Handlers
 
             var contentsResponse = await _api.GetRepositoryContents(query.Owner, 
                 query.Name, "");
-            foreach (var post in contentsResponse.Content)
+            foreach (var post in contentsResponse.Content
+                .Where(x => !x.Name.Equals("Summary.md", StringComparison.OrdinalIgnoreCase)))
             {
                 if (post.Type == ItemType.Dir)
                 {
