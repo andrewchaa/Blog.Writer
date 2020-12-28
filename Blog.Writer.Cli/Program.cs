@@ -11,7 +11,7 @@ namespace Blog.Writer.Cli
 {
     class Program
     {
-        private const string Pull = "pull";
+        private const string Write = "write";
         private static readonly IServiceProvider Services = Startup.Build();
         private static readonly IMediator _mediator = Services.GetService<IMediator>();
         private static readonly RepositoryOptions RepositoryOptions = Services.GetService<RepositoryOptions>();
@@ -21,17 +21,15 @@ namespace Blog.Writer.Cli
             await Parser.Default.ParseArguments<Options>(args)
                 .WithParsedAsync(async x =>
                 {
-                    x.Command = Pull;
-                    
                     if (string.IsNullOrEmpty(x.Command))
                     {
                         Console.WriteLine("Usage: \n");
                         Console.WriteLine("dotnet run");
-                        Console.WriteLine($"  --cmd {Pull}     to pull all your posts from the github repository");
+                        Console.WriteLine($"  --cmd {Write}     to generate jekyll posts from your chosen github repository");
                         return;
                     }
 
-                    if (x.Command == Pull)
+                    if (x.Command == Write)
                     {
                         Console.WriteLine("Pulling github posts ...");
                         await _mediator.Send(new WritePostsCommand(RepositoryOptions.Owner,
