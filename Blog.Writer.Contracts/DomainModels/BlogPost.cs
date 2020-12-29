@@ -7,6 +7,12 @@ namespace Blog.Writer.Contracts.DomainModels
 {
     public class BlogPost
     {
+        private readonly Regex _embedRegex 
+            = new Regex("{% embed url=\"(.*)\" %}", RegexOptions.Compiled);
+
+        private readonly Regex _gitbookRegex = 
+            new Regex("(\\.\\.\\/)?.gitbook", RegexOptions.Compiled);
+
         public string Name { get; }
         public DateTime Date { get; }
         public string Group { get; }
@@ -38,14 +44,15 @@ tags:
             Title = contents.Split(Environment.NewLine)
                 .First()
                 .TrimStart('#',' ')
-                .TrimStart('.');
-            var embedRegex = new Regex("{% embed url=\"(.*)\" %}", RegexOptions.Compiled);
-                
-            Contents =  embedRegex
+                .TrimStart('.')
+                .Replace(":", string.Empty);
+
+            Contents = _embedRegex
                 .Replace(contents, m => $"[{m.Groups[1].Value}]({m.Groups[1].Value})")
                 .Split("\n")
                 .Skip(3)
-                .Pipe(xs => string.Join("\n", xs));
+                .Pipe(xs => string.Join("\n", xs))
+                .Pipe(x => _gitbookRegex.Replace(x, string.Empty));
         }
     }
 }

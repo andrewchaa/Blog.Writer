@@ -21,6 +21,10 @@ namespace Blog.Writer.Services.Handlers
         public async Task<Unit> Handle(WritePostsCommand command, 
             CancellationToken cancellationToken)
         {
+            await _mediator.Send(new PullImagesCommand(command.Owner,
+                command.Name,
+                command.ImageDirectory));
+            
             var posts = await _mediator.Send(new PullPostsQuery(command.Owner,
                 command.Name));
 

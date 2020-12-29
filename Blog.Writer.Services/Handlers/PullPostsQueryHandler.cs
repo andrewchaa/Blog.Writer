@@ -28,7 +28,7 @@ namespace Blog.Writer.Services.Handlers
         {
             _query = query;
 
-            var contentsResponse = await _api.GetRepositoryContents(_query.Owner,
+            var contentsResponse = await _api.GetRepositoryContentsList(_query.Owner,
                 _query.Name, 
                 "");
             var rootPosts = contentsResponse.Content
@@ -45,7 +45,7 @@ namespace Blog.Writer.Services.Handlers
                 .ToList();
             foreach (var group in groups)
             {
-                var groupResponse = await _api.GetRepositoryContents(_query.Owner,
+                var groupResponse = await _api.GetRepositoryContentsList(_query.Owner,
                     _query.Name, 
                     group.Name);
                 posts.AddRange(await GetPosts(group.Name, groupResponse.Content));
