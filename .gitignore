@@ -363,3 +363,5 @@ FodyWeavers.xsd
 
 .idea/
 Blog.Writer.Cli/posts/
+
+go.sh
